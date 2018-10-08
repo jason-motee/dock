@@ -1,6 +1,11 @@
-function Port (port){
-    this.Port = port;
+function Port(weather){
+    this._weather = weather;
 }
-Port.prototype.getPort = function (){
-    return Port;
+
+Port.prototype.getPort = function() {
+    return this.port;
+}
+
+Port.prototype.getWeather = function() {
+    return this._weather;
 }

@@ -13,7 +13,12 @@ Ship.prototype.getCurrentPort = function (){
 }
 
 Ship.prototype.setSail = function() {
+    if(this.getCurrentPort().getWeather().isStormy()){
+        throw new Error ('cannot sail in stormy weather');
+    }
+
     this._currentPort = null;
+    
 }
 
 Ship.prototype.dock = function(arrivalPort) {

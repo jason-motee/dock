@@ -1,11 +1,13 @@
 describe ("Ship", function(){
 
+    let weather;
     let port;
     let ship;
     let arrivalPort;
 
     beforeEach (function(){
-        port = new Port();
+        weather = new Weather();
+        port = new Port(weather);
         ship = new Ship(port);
         arrivalPort = new Port();
     })
@@ -15,6 +17,8 @@ describe ("Ship", function(){
     })
 
     it('can set sail from port', function(){
+        spyOn(weather, 'isStormy').and.returnValue(false);
+
         ship.setSail();
         expect(ship.getCurrentPort()).toBeFalsy();
     })
@@ -23,5 +27,13 @@ describe ("Ship", function(){
         ship.dock(arrivalPort);
         expect(ship.getCurrentPort()).toBe(arrivalPort);
     })
+
+    it('doesn\'t set sail in stormy weather', function () {
+        spyOn(weather, 'isStormy').and.returnValue(true);
+
+        expect(function () {
+            ship.setSail();
+          }).toThrowError('cannot sail in stormy weather');
+    });
 
 });
