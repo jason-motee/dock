@@ -21,6 +21,12 @@ Ship.prototype.setSail = function() {
     
 }
 
-Ship.prototype.dock = function(arrivalPort) {
-    this._currentPort = arrivalPort;
+Ship.prototype.dock = function(port) {
+    this._currentPort = port;
+    if(this._currentPort.getCapacity() <= 8){
+        this._currentPort.addShip(this);
+    } else {
+        throw new Error ('the port is at full capacity, please try later.');
+    }
+    
 }

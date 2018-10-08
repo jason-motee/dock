@@ -33,7 +33,24 @@ describe ("Ship", function(){
 
         expect(function () {
             ship.setSail();
-          }).toThrowError('cannot sail in stormy weather');
-    });
+        }).toThrowError('cannot sail in stormy weather'); 
+    })
+
+    it('instructs the port to add the ship', function (){
+        spyOn(arrivalPort, 'addShip');
+        ship.dock(arrivalPort);
+        expect(arrivalPort.addShip).toHaveBeenCalledWith(ship);
+    })
+
+    it('doesn\'t dock if port is at capacity', function (){
+
+        for (var i = 0; i <=8 ;i++){
+            port.addShip('Shippy McShippyface');
+        }
+        
+        expect(function(){
+            ship.dock(port);
+        }).toThrowError('the port is at full capacity, please try later.');
+    })
 
 });
